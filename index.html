@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Vively Global × Labiotte — 마켓 검증 시딩 캠페인</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.min.css" />
+<style>
+  :root {
+    --bg: #faf7f6;
+    --surface: #ffffff;
+    --surface-2: #fdf8f7;
+    --text: #241c1e;
+    --muted: #746664;
+    --subtle: #ab9c99;
+    --line: rgba(36, 20, 22, 0.08);
+    --line-strong: rgba(36, 20, 22, 0.15);
+    --accent: #c46685;
+    --accent-2: #8b6fd6;
+    --mint: #0ea371;
+    --gold: #c9a15c;
+    --radius: 18px;
+    --radius-sm: 12px;
+    --max-width: 1200px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  .glow-field { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+  .glow { position: absolute; width: 760px; height: 760px; border-radius: 50%; filter: blur(150px); opacity: 0.12; animation: drift 18s ease-in-out infinite alternate; }
+  .glow.g1 { background: var(--accent); top: -220px; left: -160px; }
+  .glow.g2 { background: var(--accent-2); top: 30%; right: -280px; animation-delay: -6s; }
+  .glow.g3 { background: var(--gold); bottom: -260px; left: 25%; animation-delay: -12s; }
+  @keyframes drift { from { transform: translate(0, 0) scale(1); } to { transform: translate(60px, -50px) scale(1.12); } }
+
+  .report { position: relative; z-index: 1; max-width: var(--max-width); margin: 0 auto; padding: 56px 40px 90px; }
+  .hero { padding: 44px 0 40px; border-bottom: 1px solid var(--line); }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 18px; border: 1px solid var(--line-strong); border-radius: 999px; padding: 7px 14px;
+    background: rgba(36, 20, 22, 0.02);
+  }
+  .live-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--mint); box-shadow: 0 0 0 0 rgba(14, 163, 113, 0.6); animation: pulse 2s infinite; }
+  @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(14, 163, 113, 0.55); } 70% { box-shadow: 0 0 0 10px rgba(14, 163, 113, 0); } 100% { box-shadow: 0 0 0 0 rgba(14, 163, 113, 0); } }
+  .title { font-size: 54px; line-height: 1.14; font-weight: 800; letter-spacing: -0.03em; margin: 0 0 18px; }
+  .title .grad { background: linear-gradient(92deg, var(--accent) 0%, var(--accent-2) 60%, var(--gold) 120%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .subtitle2 { font-size: 15px; font-weight: 500; color: var(--subtle); margin-bottom: 26px; }
+  .pillstat-row { display: flex; gap: 14px; flex-wrap: wrap; }
+  .pillstat { border: 1px solid var(--line-strong); border-radius: 999px; padding: 10px 18px; display: flex; align-items: baseline; gap: 8px; background: var(--surface); }
+  .pillstat b { font-size: 17px; font-weight: 800; background: linear-gradient(92deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .pillstat span { font-size: 12.5px; color: var(--muted); }
+
+  .section { padding: 46px 0; border-bottom: 1px solid var(--line); }
+  .section h2 { font-size: 29px; line-height: 1.25; margin: 0 0 8px; letter-spacing: -0.02em; font-weight: 700; }
+  .section h2 .num { font-size: 13px; color: var(--accent); font-weight: 700; letter-spacing: 0.12em; display: block; margin-bottom: 8px; }
+  .section-intro { color: var(--muted); max-width: 860px; margin: 0 0 26px; font-size: 15.5px; }
+  .source-tag { display: inline-block; font-size: 12px; color: var(--subtle); margin-bottom: 22px; border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px; }
+
+  .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .card {
+    border: 1px solid var(--line); border-radius: var(--radius); padding: 22px;
+    background: linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%);
+    transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+  }
+  .card:hover { transform: translateY(-4px); border-color: var(--line-strong); box-shadow: 0 18px 44px rgba(36, 20, 22, 0.1); }
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; padding: 3px 9px; border-radius: 999px; background: rgba(14, 163, 113, 0.1); color: #0c8f63; border: 1px solid rgba(14, 163, 113, 0.3); }
+  .tag.violet { background: rgba(139, 111, 214, 0.12); color: #6a4fc4; border-color: rgba(139, 111, 214, 0.35); }
+  .tag.pink { background: rgba(196, 102, 133, 0.12); color: #a94769; border-color: rgba(196, 102, 133, 0.35); }
+  .pill-wrap { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .insight { margin-top: 22px; padding: 16px 18px; border-left: 3px solid var(--accent); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; background: rgba(196, 102, 133, 0.07); font-size: 14.5px; color: #4a3d3f; }
+  .insight strong { color: var(--text); }
+  .note-box { margin-top: 16px; padding: 14px 16px; border: 1px dashed var(--line-strong); border-radius: var(--radius-sm); font-size: 13.5px; color: var(--muted); background: rgba(36, 20, 22, 0.02); }
+  .label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+  .case-title { font-size: 20px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 14px; }
+  .list { margin: 0; padding-left: 18px; color: #4a3d3f; }
+  .list li { margin-bottom: 9px; }
+  .list li::marker { color: var(--accent); }
+
+  /* rank list (hashtag ranking) */
+  .rank-list { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
+  .rank-row { display: flex; align-items: center; gap: 14px; border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 12px 16px; background: rgba(36, 20, 22, 0.015); }
+  .rank-badge { flex: none; width: 40px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #fff; }
+  .rank-tag { font-weight: 700; font-size: 14.5px; color: var(--text); flex: 1; min-width: 160px; }
+  .rank-stat { font-size: 12.5px; color: var(--muted); text-align: right; }
+
+  .metric-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 18px; }
+  .metric-strip.cols-2 { grid-template-columns: repeat(2, 1fr); }
+  .metric-mini { border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 14px; background: rgba(36, 20, 22, 0.015); }
+  .metric-mini.win { border-color: rgba(14, 163, 113, 0.35); background: rgba(14, 163, 113, 0.07); }
+  .metric-mini span { display: block; font-size: 12.5px; color: var(--muted); margin-bottom: 6px; }
+  .metric-mini strong { font-size: 21px; letter-spacing: -0.02em; }
+  .metric-mini.win strong { color: #0c8f63; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  th, td { text-align: left; vertical-align: top; padding: 12px 10px; border-bottom: 1px solid var(--line); }
+  th { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
+  td { color: #4a3d3f; }
+
+  /* product spotlight */
+  .product-wrap { display: grid; grid-template-columns: 280px 1fr; gap: 30px; align-items: center; }
+  .product-photo { border-radius: var(--radius); overflow: hidden; background: #fbf6f4; padding: 10px; border: 1px solid var(--line); }
+  .product-photo img { width: 100%; display: block; border-radius: calc(var(--radius) - 8px); }
+  @media (max-width: 780px) { .product-wrap { grid-template-columns: 1fr; } }
+
+  /* content-type / proof cards with image */
+  .media-card { border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--surface); }
+  .media-card .media-photo { aspect-ratio: 4 / 5; overflow: hidden; background: #f2eae7; }
+  .media-card .media-photo img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease; }
+  .media-card:hover .media-photo img { transform: scale(1.04); }
+  .media-card .media-body { padding: 18px 20px 22px; }
+  .media-card h3 { font-size: 17px; margin: 0 0 8px; font-weight: 700; }
+  .media-card p { font-size: 13.5px; color: var(--muted); margin: 0; }
+
+  .num-badge { width: 32px; height: 32px; border-radius: 9px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 13px; margin-bottom: 12px; }
+
+  .checklist { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 10px; }
+  .checklist li { display: flex; gap: 12px; align-items: flex-start; font-size: 14px; color: #33272a; background: rgba(36, 20, 22, 0.015); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; }
+  .checklist li .box { flex: none; width: 16px; height: 16px; margin-top: 3px; border-radius: 5px; border: 2px solid var(--accent); }
+
+  .proof-photo { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); }
+  .proof-photo img { width: 100%; display: block; }
+
+  .quote-box {
+    border: 1px solid transparent; border-radius: var(--radius); padding: 28px; font-size: 18px; line-height: 1.55; letter-spacing: -0.015em;
+    background: linear-gradient(180deg, var(--surface), var(--surface-2)) padding-box, linear-gradient(135deg, rgba(196, 102, 133, .55), rgba(139, 111, 214, .5)) border-box;
+    color: #33272a;
+  }
+  .footer { font-size: 13px; color: var(--muted); line-height: 1.7; padding-top: 28px; }
+  .footer a { color: var(--text); text-decoration: none; border-bottom: 1px solid var(--line-strong); }
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  @media (max-width: 1024px) {
+    .grid-4, .grid-3, .grid-2 { grid-template-columns: 1fr; }
+    .title { font-size: 38px; }
+    .report { padding: 32px 20px 60px; }
+  }
+</style>
+</head>
+<body>
+  <div class="glow-field">
+    <div class="glow g1"></div>
+    <div class="glow g2"></div>
+    <div class="glow g3"></div>
+  </div>
+
+  <div class="report" id="app"></div>
+
+  <script>
+  /* ═════════════════════════════════════════════════════════════════════
+     데이터 블록 — Vively (2).pdf ("Vively Global x Labiotte") 원본 기준
+     ═════════════════════════════════════════════════════════════════════ */
+  const REPORT = {
+    hero: {
+      eyebrow: "Global Marketing Partnership Proposal",
+      title: "Vively Global × Labiotte",
+      pills: [
+        { value: "30명", label: "시딩 참여 크리에이터" },
+        { value: "1개", label: "노출 국가" },
+        { value: "₩1.5M", label: "시딩 예산 (세금 미포함)" }
+      ]
+    },
+
+    /* ---- 01 일본 뷰티 카테고리 시장 검증 ---- */
+    japan: {
+      source: "TikTok Creative Center – Japan (Beauty & Personal Care, 30 days)",
+      intro: "최근 30일 기준 일본 뷰티 & 퍼스널 케어 인기 해시태그",
+      hashtags: [
+        { rank: "", tag: "#夏ネイル (여름 네일)", stat: "게시물 8.5K · 조회수 7,330만" },
+        { rank: "", tag: "#浴衣ヘア (유카타 헤어)", stat: "게시물 1.1K · 조회수 2,940만" },
+        { rank: "", tag: "#osina", stat: "게시물 863 · 조회수 1,090만" },
+        { rank: "", tag: "#wax", stat: "게시물 2.4K · 조회수 990만" },
+        { rank: "", tag: "#perfumetiktok", stat: "게시물 1.6K · 조회수 480만" }
+      ],
+      patterns: ["전후(Before & After) 변화를 강조한 콘텐츠", "화면 내 텍스트 콜아웃(On-screen text callouts)", "디바이스 사용 장면을 클로즈업한 데모", "실제 사용 후기 중심의 보이스오버 (Testimonial voiceover)"],
+      image: "media/labiotte/labiotte-jp-grid.jpg",
+      insightList: [
+        "일본에서는 디바이스 + 스킨케어 콘텐츠가 눈에 띄는 피부 변화와 실제 집에서 사용하는 모습을 담은 진정성 있는 데모에서 높은 반응을 얻고 있습니다.",
+        "따라서 완성도 높은 브랜드 광고보다 크리에이터 시딩(UGC) 중심의 콘텐츠 전략이 더 효과적일 것으로 판단됩니다."
+      ]
+    },
+
+    /* ---- 02 美容機器 (biyō kiki) 뷰티 디바이스 키워드 트렌드 ---- */
+    trend: {
+      title: "美容機器 (biyō kiki) - 뷰티 디바이스 키워드 트렌드",
+      chartImage: "media/labiotte/labiotte-trends-chart.jpg",
+      queryImage: "media/labiotte/labiotte-rising-queries.jpg",
+      boxes: [
+        { title: "Category Domination", text: "다른 키워드와 비교했을 때, '메디큐브 디바이스'가 압도적으로 1위를 차지하고 있습니다" },
+        { title: "Rising Keyword", text: "일본에서 'RX Beauty Device' 키워드가 상승세를 보이고 있으며, 아직 'Breakout' 단계에 진입하지 않았다는 점은 해당 키워드를 선점할 가능성이 충분하다는 것을 의미합니다." }
+      ]
+    },
+
+    /* ---- 03 제품에 맞는 콘텐츠 아이디어 예시 ---- */
+    product: {
+      name: "LABIOTTE AESTHE RX COLLAGEN CREAM",
+      nameKr: "에스테 알엑스 콜라겐 크림",
+      image: "media/labiotte/labiotte-product-jar.jpg",
+      contentTypeTitle: "RX 뷰티 디바이스와 잘 맞는 콘텐츠 유형",
+      contentTypeSub: "스토리텔링",
+      storyImage: "media/labiotte/labiotte-storytelling.jpg",
+      quote: "'어릴때 피부관리 제대로 안 해서 후외했어요. 피부관리하기 귀찮고 익숙하지가 않아서 피부과 처럼 집에서 홈디바이스 쓰걸 선호합니다'"
+    },
+
+    /* ---- 04 美容機器 Beauty Device 포지셔닝 — LABIOTTE 차별화 전략 ---- */
+    positioning: {
+      title: "美容機器 (biyō kiki) - Beauty Device 포지셔닝",
+      subtitle: "LABIOTTE 차별화 전략",
+      blocks: [
+        { title: "시장 배경", body: "일본 미드티어 뷰티 디바이스 시장(¥8,900–22,000)은 경쟁이 치열하며, 대부분의 브랜드는 디바이스를 단독으로 판매하고 있습니다. 또한 구매 결정은 UGC, 리뷰, 전후(Before & After) 콘텐츠에 크게 영향을 받고 있습니다." },
+        { title: "차별화 전략", body: "디바이스가 아닌 '스킨케어 시스템'으로 포지셔닝. LABIOTTE는 디바이스와 콜라겐 크림을 함께 제공하는 올인원 솔루션을 제안하여 경쟁사와 차별화합니다. 리필(Refill) 구조를 활용한 지속적인 사용 경험 제공 — 크림 리필 구매를 통해 일회성 디바이스 판매가 아닌 반복 구매와 장기 고객 관계(LTV)를 구축합니다." },
+        { title: "UGC를 통한 사용 루틴 확산", body: "크리에이터 콘텐츠에서 디바이스와 크림을 함께 사용하는 루틴과 전후 변화를 중심으로 실제 효능을 전달하여 제품 신뢰도를 강화합니다." },
+        { title: "Key Message", body: "'디바이스'를 판매하는 것이 아니라, '디바이스 + 콜라겐 크림 + 리필'로 이어지는 스킨케어 루틴을 제안합니다. 이를 통해 경쟁사와 차별화하고 반복 구매를 유도하는 브랜드 생태계를 구축할 수 있습니다." }
+      ]
+    },
+
+    /* ---- 05 추가적으로 시딩에 들어갈 내용, 핵심 키워드, 시딩 가이드라인 ---- */
+    seedingExtra: {
+      winetintTitle: "한때 바이럴되었던 '와인 립틴트'에 대해 언급",
+      wineImage: "media/labiotte/labiotte-wine-liptint.jpg",
+      toneUpTitle: "'여름 필수' 아이템으로 시딩",
+      toneUpCaption: "Collagen Tone Up Cream",
+      toneUpImage: "media/labiotte/labiotte-tone-up-cream.jpg",
+      sourcing: "한국 기반 일본어 능통 크리에이터 (한국 거주·유학 중인 일본인, 한일 이중언어 구사 한국인 크리에이터, 일본 타깃 K-뷰티 리뷰어)",
+      distribution: "한국에서 제작된 자연스러운 일본어 UGC를 TikTok/Instagram JP 채널을 통해 배포",
+      tierTitle: "나노/마이크로 크리에이터 (30명)",
+      tierDesc: "높은 볼륨의 진정성 있는 UGC 제작 — 언박싱, ASMR, 디바이스 사운드, 제품 사용 후기, K-뷰티 리뷰 스타일 콘텐츠 등을 통해 브랜드 신뢰도 및 검색 노출 증대",
+      productTiers: [
+        "팔로워 1만 명 이상 크리에이터: Labiotte RF Beauty Device Collagen 제공",
+        "팔로워 1만 명 미만 크리에이터: 콜라겐 크림 제공 (또는 콜라겐 크림 + 와인 립틴트 제공)"
+      ],
+      barter: ["Instagram/TikTok 숏폼 영상 1건 업로드 필수", "브랜드 의도에 따라 공동 작업 콘텐츠(공동 게시물/콜라보 콘텐츠) 진행 가능 여부는 별도 협의 필요"],
+      criteria: ["일본어 사용 팔로워 비중 70% 이상", "스킨케어/K-뷰티 전문 분야", "참여율(Engagement Rate) 4% 이상", "디바이스 또는 스킨케어 관련 콘텐츠 제작 경험 보유", "TikTok/Instagram 콘텐츠 제작 및 링크 인 바이오(Link-in-bio) 활용 가능"]
+    },
+
+    /* ---- 06 마케팅 예산 계획 ---- */
+    budget: {
+      image: "media/labiotte/labiotte-nalu-model.jpg",
+      pills: [
+        { value: "150만원", label: "Vively Global Seeding (세금 미포함)" },
+        { value: "30명", label: "총 참가 인원" },
+        { value: "1개", label: "노출 국가" },
+        { value: "불가", label: "2차 활용 (필요시 인플루언서와 컨택트 가능)" }
+      ],
+      lines: [
+        "Vively Global Seeding: 150만원 (세금 미포함)",
+        "인플루언서 서칭, 컨택트, 팔로우업, 업로드 관리 포함",
+        "리스트 60명까지 전달, 그중에서 30명 진행",
+        "제품 제공: 브랜드 부담",
+        "국내 택배비 및 핸들링: 브랜드 부담",
+        "총 참가 인원: 30명",
+        "노출 국가: 1개",
+        "2차 활용: 불가 (필요시 인플루언서와 컨택트 가능)"
+      ]
+    },
+
+    /* ---- 07 컨텐츠 유형 ---- */
+    contentTypes: [
+      { title: "제품 리뷰", image: "media/labiotte/labiotte-content-review.jpg", desc: "타겟 국가의 언어로 제품을 소개하고 설명하며, 자연스러운 노출이 이루어지는 UGC" },
+      { title: "매장 방문", image: "media/labiotte/labiotte-content-store.jpg", desc: "국내 또는 해외에 입점한 오프라인 매장을 직접 방문하고 제품을 구매하는 모습을 담은 UGC는 해외 고객의 신뢰를 높이는 데 효과적입니다." },
+      { title: "행사 참석", image: "media/labiotte/labiotte-content-event.jpg", desc: "국내외 행사에 글로벌 크리에이터가 직접 참석해 브랜드의 온·오프라인 경험(Online Experience)을 전달하는 콘텐츠 유형" }
+    ],
+
+    /* ---- 08 시딩 캠페인 + 공동구매 (2026년 8월 글로벌 마케팅 계획) ---- */
+    coBuy: {
+      subtitle: "2026년 8월 글로벌 마케팅 계획",
+      image: "media/labiotte/labiotte-seeding-grid.jpg",
+      points: [
+        { num: 1, title: "일본 시딩 30명 진행 + 공동구매 최소 1명", note: "(영상 성과가 좋은 크리에이터 중심으로 진행)" },
+        { num: 2, title: "국가 Mix 30명 진행 + 공동구매 최소 1명", note: "(영상 성과가 좋은 크리에이터 중심으로 진행)" },
+        { num: 3, title: "라이브 호스트 진행", note: "별도 논의 필요" }
+      ]
+    },
+
+    /* ---- 09 TikTok/Shopee Livehost (동남아) ---- */
+    livehost: [
+      { title: "Daily Live Commerce", desc: "한국 또는 해외 거주 전담 호스트가 매일 라이브를 진행", note: "월 고정 비용 + 총매출 연동 수수료", image: "media/labiotte/labiotte-nutrione-live.jpg" },
+      { title: "Mega Sale Events", desc: "9.9, 11.11, 12.12 등 메가 캠페인 기간에 맞춘 라이브 커머스 진행", note: "1회 진행 비용 + 매출 연동 수수료", image: "media/labiotte/labiotte-livestream.jpg" },
+      { title: "Influencer Collabo Live", desc: "메가 인플루언서 또는 영향력 있는 연예인을 초대하여 라이브 진행", note: "별도로 협찬비 필요", image: "media/labiotte/labiotte-shoot-proof.jpg" }
+    ],
+
+    footer: {
+      sourceName: "Vively Global x Labiotte — Global Marketing Partnership Proposal",
+      note: "본 리포트는 TikTok Creative Center 및 Google Trends의 일본 뷰티 디바이스 카테고리 트렌드 데이터를 기반으로 한 사전 시장 검증 및 시딩 캠페인 제안 자료입니다. 해시태그, 키워드, 크리에이터 지표는 조사 시점(최근 30일 기준) 스냅샷이며, 실제 캠페인 집행 결과와는 다를 수 있습니다."
+    }
+  };
+  /* ═══════════════════ 데이터 블록 끝 ═══════════════════ */
+  </script>
+
+  <script>
+    /* ============ html helpers ============ */
+    const esc = (s) => String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;");
+    const num2 = (n) => String(n).padStart(2, "0");
+    const listHtml = (items) => '<ul class="list">' + items.map((li) => "<li>" + li + "</li>").join("") + "</ul>";
+
+    let sectionNo = 0;
+    const parts = [];
+    const R = REPORT;
+
+    /* hero */
+    parts.push(
+      '<section class="hero reveal">' +
+      '<div class="eyebrow"><span class="live-dot"></span> ' + esc(R.hero.eyebrow) + "</div>" +
+      '<h1 class="title"><span class="grad">' + esc(R.hero.title) + "</span></h1>" +
+      '<div class="pillstat-row">' +
+      R.hero.pills.map((p) => '<div class="pillstat"><b>' + esc(p.value) + "</b><span>" + esc(p.label) + "</span></div>").join("") +
+      "</div></section>"
+    );
+
+    /* 01 — Japan market verification */
+    sectionNo++;
+    (function () {
+      const j = R.japan;
+      parts.push(
+        '<section class="section reveal">' +
+        '<h2><span class="num">' + num2(sectionNo) + " — MARKET VERIFICATION</span>일본 뷰티 카테고리 시장 검증</h2>" +
+        '<div class="source-tag">' + esc(j.source) + "</div>" +
+        '<div class="section-intro">' + esc(j.intro) + "</div>" +
+        '<div class="grid-2">' +
+        '<div class="card"><div class="case-title">최근 30일 인기 해시태그</div>' +
+        '<div class="rank-list">' +
+        j.hashtags.map((h) => '<div class="rank-row"><span class="rank-tag">' + esc(h.tag) + '</span><span class="rank-stat">' + esc(h.stat) + "</span></div>").join("") +
+        "</div>" +
+        '<div class="case-title" style="margin-top:22px;">성과가 좋은 크리에이티브 패턴</div>' +
+        '<div class="pill-wrap">' + j.patterns.map((p) => '<span class="tag violet">' + esc(p) + "</span>").join("") + "</div>" +
+        "</div>" +
+        '<div><div class="proof-photo"><img src="' + esc(j.image) + '" alt="일본 뷰티 디바이스 UGC" /></div></div>' +
+        "</div>" +
+        '<div class="card" style="margin-top:20px;"><div class="case-title">인사이트</div>' + listHtml(j.insightList.map(esc)) + "</div>" +
+        "</section>"
+      );
+    })();
+
+    /* 02 — beauty device keyword trend */
+    sectionNo++;
+    (function () {
+      const t = R.trend;
+      parts.push(
+        '<section class="section reveal">' +
+        '<h2><span class="num">' + num2(sectionNo) + " — KEYWORD TREND</span>" + esc(t.title) + "</h2>" +
+        '<div class="grid-2">' +
+        '<div class="proof-photo"><img src="' + esc(t.chartImage) + '" alt="Google Keyword Trend Japan" /></div>' +
+        '<div class="proof-photo"><img src="' + esc(t.queryImage) + '" alt="Rising Queries" /></div>' +
+        "</div>" +
+        '<div class="grid-2" style="margin-top:20px;">' +
+        t.boxes.map((b) => '<div class="card"><div class="case-title">' + esc(b.title) + "</div><p style=\"font-size:14.5px; color:#4a3d3f; margin:0;\">" + esc(b.text) + "</p></div>").join("") +
+        "</div></section>"
+      );
+    })();
+
+    /* 03 — product content ideas */
+    sectionNo++;
+    (function () {
+      const p = R.product;
+      parts.push(
+        '<section class="section reveal">' +
+        '<h2><span class="num">' + num2(sectionNo) + " — CONTENT IDEAS</span>제품에 맞는 콘텐츠 아이디어 예시</h2>" +
+        '<div class="grid-2">' +
+        '<div class="card"><div class="product-photo"><img src="' + esc(p.image) + '" alt="' + esc(p.name) + '" /></div>' +
+        '<div class="case-title" style="margin-top:18px; font-size:18px;">' + esc(p.name) + '</div><div style="color:var(--muted); font-size:13.5px;">' + esc(p.nameKr) + "</div></div>" +
+        '<div class="card"><div class="tag violet" style="margin-bottom:10px;">' + esc(p.contentTypeSub) + "</div>" +
+        '<div class="case-title">' + esc(p.contentTypeTitle) + "</div>" +
+        '<div class="proof-photo" style="margin:14px 0;"><img src="' + esc(p.storyImage) + '" alt="스토리텔링 예시" /></div>' +
+        '<div class="insight">' + esc(p.quote) + "</div>" +
+        "</div></div></section>"
+      );
+    })();
+
+    /* 04 — beauty device positioning (text only) */
+    sectionNo++;
+    (function () {
+      const pos = R.positioning;
+      parts.push(
+        '<section class="section reveal">' +
+        '<h2><span class="num">' + num2(sectionNo) + " — POSITIONING</span>" + esc(pos.title) + "</h2>" +
+        '<div class="section-intro">' + esc(pos.subtitle) + "</div>" +
+        '<div class="grid-2">' +
+        pos.blocks.map((b) => '<div class="card"><div class="case-title">' + esc(b.title) + '</div><p style="font-size:14.5px; color:#4a3d3f; margin:0;">' + esc(b.body) + "</p></div>").join("") +
+        "</div></section>"
+      );
+    })();
+
+    /* 05 — seeding extra content + guideline */
+    sectionNo++;
+    (function () {
+      const s = R.seedingExtra;
+      parts.push(
+        '<section class="section reveal">' +
+        '<h2><span class="num">' + num2(sectionNo) + " — SEEDING GUIDELINE</span>추가적으로 시딩에 들어갈 내용, 핵심 키워드, 시딩 가이드라인</h2>" +
+        '<div class="grid-2">' +
+        '<div>' +
+        '<div class="card"><div class="case-title" style="font-size:16px;">' + esc(s.winetintTitle) + "</div>" +
+        '<div class="product-photo" style="margin-top:12px;"><img src="' + esc(s.wineImage) + '" alt="Wine Liptint" /></div></div>' +
+        '<div class="card" style="margin-top:16px;"><div class="case-title" style="font-size:16px;">' + esc(s.toneUpTitle) + "</div>" +
+        '<div class="product-photo" style="margin-top:12px; max-width:260px;"><img src="' + esc(s.toneUpImage) + '" alt="' + esc(s.toneUpCaption) + '" /></div>' +
+        '<div style="text-align:center; font-style:italic; color:var(--muted); font-size:13px; margin-top:8px;">' + esc(s.toneUpCaption) + "</div></div>" +
+        "</div>" +
+        '<div class="card">' +
+        '<div class="label">소싱</div><div style="margin-bottom:14px; color:var(--text); font-weight:600; font-size:14px;">' + esc(s.sourcing) + "</div>" +
+        '<div style="margin-bottom:16px; color:#4a3d3f; font-size:13.5px;">' + esc(s.distribution) + "</div>" +
+        '<div class="label">' + esc(s.tierTitle) + '</div><div style="margin-bottom:16px; color:#4a3d3f; font-size:13.5px;">' + esc(s.tierDesc) + "</div>" +
+        '<div class="label">제품 제공 기준</div>' + listHtml(s.productTiers.map(esc)) +
+        "</div></div>" +
+        '<div class="grid-2" style="margin-top:20px;">' +
+        '<div class="card"><div class="case-title">바터 조건</div>' + listHtml(s.barter.map(esc)) + "</div>" +
+        '<div class="card"><div class="case-title">선정 기준</div><ul class="checklist">' +
+        s.criteria.map((c) => '<li><span class="box"></span>' + esc(c) + "</li>").join("") +
+        "</ul></div></div>" +
+        "</section>"
+      );
+    })();
+
+    /* 06 — budget plan */
+    sectionNo++;
+    (function () {
+      const b = R.budget;
+      parts.push(
+        '<section class="section reveal">' +
+        '<h2><span class="num">' + num2(sectionNo) + " — BUDGET PLAN</span>마케팅 예산 계획</h2>" +
+        '<div class="grid-4">' +
+        b.pills.map((p) => '<div class="card"><div style="font-size:24px;font-weight:800;letter-spacing:-0.02em;margin-bottom:8px;background:linear-gradient(92deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent;">' + esc(p.value) + '</div><div style="font-size:13px;color:var(--muted);">' + esc(p.label) + "</div></div>").join("") +
+        "</div>" +
+        '<div class="grid-2" style="margin-top:20px;">' +
+        '<div class="card"><div class="case-title">세부 조건</div>' + listHtml(b.lines.map(esc)) + "</div>" +
+        '<div class="product-photo" style="padding:0; border-radius:var(--radius); overflow:hidden;"><img src="' + esc(b.image) + '" alt="Vively creator content" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>' +
+        "</div></section>"
+      );
+    })();
+
+    /* 07 — content types */
+    sectionNo++;
+    parts.push(
+      '<section class="section reveal">' +
+      '<h2><span class="num">' + num2(sectionNo) + " — CONTENT TYPES</span>컨텐츠 유형</h2>" +
+      '<div class="grid-3">' +
+      R.contentTypes.map((c) =>
+        '<div class="media-card"><div class="media-photo"><img src="' + esc(c.image) + '" alt="' + esc(c.title) + '" /></div>' +
+        '<div class="media-body"><h3>' + esc(c.title) + "</h3><p>" + esc(c.desc) + "</p></div></div>"
+      ).join("") +
+      "</div></section>"
+    );
+
+    /* 08 — seeding campaign + co-buy */
+    sectionNo++;
+    (function () {
+      const c = R.coBuy;
+      parts.push(
+        '<section class="section reveal">' +
+        '<h2><span class="num">' + num2(sectionNo) + " — CAMPAIGN + CO-BUY</span>라비오뜨 글로벌 마켓 검증 - 시딩 캠페인 + 공동구매</h2>" +
+        '<div class="section-intro">' + esc(c.subtitle) + "</div>" +
+        '<div class="grid-2">' +
+        '<div class="proof-photo"><img src="' + esc(c.image) + '" alt="Vively 크리에이터 포트폴리오" /></div>' +
+        '<div>' +
+        c.points.map((pt) =>
+          '<div class="card" style="margin-bottom:14px;"><div class="num-badge">' + pt.num + '</div><div class="case-title" style="font-size:16px; margin-bottom:6px;">' + esc(pt.title) + '</div><div style="color:var(--muted); font-size:13.5px;">' + esc(pt.note) + "</div></div>"
+        ).join("") +
+        "</div></div>" +
+        "</section>"
+      );
+    })();
+
+    /* 09 — livehost */
+    sectionNo++;
+    parts.push(
+      '<section class="section reveal">' +
+      '<h2><span class="num">' + num2(sectionNo) + " — LIVE COMMERCE</span>TikTok / Shopee Livehost (동남아)</h2>" +
+      '<div class="grid-3">' +
+      R.livehost.map((l) =>
+        '<div class="media-card"><div class="media-photo" style="aspect-ratio:9/16;"><img src="' + esc(l.image) + '" alt="' + esc(l.title) + '" /></div><div class="media-body"><h3>' + esc(l.title) + "</h3><p>" + esc(l.desc) + '</p><div class="note-box" style="margin-top:10px;">' + esc(l.note) + "</div></div></div>"
+      ).join("") +
+      "</div></section>"
+    );
+
+    /* footer */
+    parts.push(
+      '<div class="footer reveal">Source: ' + esc(R.footer.sourceName) + "<br /><br />" + esc(R.footer.note) + "</div>"
+    );
+
+    document.getElementById("app").innerHTML = parts.join("");
+
+    /* ============ reveal on scroll ============ */
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add("in"); });
+    }, { threshold: 0.12 });
+    document.querySelectorAll(".reveal").forEach((el) => revealObserver.observe(el));
+  </script>
+</body>
+</html>
